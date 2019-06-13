@@ -30,16 +30,16 @@ public class BrandLikeMap implements FlatMapFunction<KafkaEvent, BrandLike> {
         String tablename = "userflaginfo"; // 表名
         String rowkey = userid + "";
         String familyname = "userbehavior";
-        String column = "brandlist"; // 运营商
+        String column = "brandlist";
         String mapData = HbaseUtils.getData(tablename, rowkey, familyname, column);
 
-        Map<String, Long> map = new HashMap<>();
-        if (StringUtils.isBlank(mapData)) {
+        Map<String, Integer> map = new HashMap<>();
+        if (StringUtils.isNotBlank(mapData)) {
             map = JSONObject.parseObject(mapData, Map.class);
         }
         // 获取之前的品牌偏好
         String maxPreBrand = MapUtils.getMaxByMap(map);
-        long prebrand = map.get(brand) == null ? 0l : map.get(brand);
+        int prebrand = map.get(brand) == null ? 0 : map.get(brand);
         map.put(brand, prebrand + 1);
         HbaseUtils.putdata(tablename, rowkey, familyname, column, JSONObject.toJSONString(map));
 

@@ -46,7 +46,7 @@ public class HbaseUtils {
      * @param familyname
      * @throws IOException
      */
-    public void createTable(String tabname, String familyname) throws IOException {
+    public static void createTable(String tabname, String familyname) throws IOException {
         HTableDescriptor tab = new HTableDescriptor(tabname);
         // 添加列族，每个表至少有一个列族
         HColumnDescriptor colDesc = new HColumnDescriptor(familyname);
@@ -127,8 +127,14 @@ public class HbaseUtils {
     }
 
     public static void main(String[] args) throws IOException {
-        String string = getData("baseuserscaninfo", "1", "time", "");
-        System.out.println(string);
+//        createTable("userflaginfo", "userbehavior");
+        String tablename = "userflaginfo"; // 表名
+        String rowkey = 1 + "";
+        String familyname = "userbehavior";
+        String column = "brandlist"; // 运营商
+//        HbaseUtils.putdata(tablename, rowkey, familyname, column, "{\"nike\":11,\"adidas\":9}");
+        String mapData = HbaseUtils.getData(tablename, rowkey, familyname, column);
+        System.out.println(mapData);
     }
 
 }

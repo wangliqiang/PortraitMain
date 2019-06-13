@@ -7,7 +7,7 @@ package com.entity;
  */
 public class BrandLike {
     private String brand;
-    private long count;
+    private Long count;
     private String groupfield;
 
     public String getGroupfield() {
@@ -26,11 +26,11 @@ public class BrandLike {
         this.brand = brand;
     }
 
-    public long getCount() {
+    public Long getCount() {
         return count;
     }
 
-    public void setCount(long count) {
+    public void setCount(Long count) {
         this.count = count;
     }
 }

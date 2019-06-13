@@ -35,13 +35,13 @@ public class UseTypeMap implements FlatMapFunction<KafkaEvent, UseTypeInfo> {
         String column = "usetypelist"; // 运营商
         String mapData = HbaseUtils.getData(tablename, rowkey, familyname, column);
 
-        Map<String, Long> map = new HashMap<>();
-        if (StringUtils.isBlank(mapData)) {
+        Map<String, Integer> map = new HashMap<>();
+        if (StringUtils.isNotBlank(mapData)) {
             map = JSONObject.parseObject(mapData, Map.class);
         }
         // 获取之前的终端偏好
         String maxPreUsetype = MapUtils.getMaxByMap(map);
-        long preUseType = map.get(usetypename) == null ? 0l : map.get(usetypename);
+        int preUseType = map.get(usetypename) == null ? 0 : map.get(usetypename);
         map.put(usetypename, preUseType + 1);
         HbaseUtils.putdata(tablename, rowkey, familyname, column, JSONObject.toJSONString(map));
 
